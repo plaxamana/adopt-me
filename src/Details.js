@@ -2,12 +2,9 @@ import { Component } from "react";
 import { withRouter } from "react-router";
 
 class Details extends Component {
-  constructor() {
-    super();
-    this.state = { loading: true };
-  }
+  state = { loading: true };
 
-  // Lifecycle method - similar to useEffect()
+  // Lifecycle method - similar to useEffect() - Loads on pageload
   async componentDidMount() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?id=${this.props.match.params.id}`
@@ -24,6 +21,10 @@ class Details extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <h2>Loading..</h2>;
+    }
+
     const { animal, breed, city, state, description, name } = this.state;
     return (
       <div className="details">
@@ -34,7 +35,7 @@ class Details extends Component {
           <p>{description}</p>
         </div>
       </div>
-    )
+    );
   }
 }
 
